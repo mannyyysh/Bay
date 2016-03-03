@@ -10,6 +10,9 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd 
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <context:annotation-config />
+	<context:component-scan base-package="com.bay" />
+	
 	<jaxrs:server id="zipCodeContainer" address="/">
 		<jaxrs:serviceBeans>
 			<ref bean="zipCodeService" />
@@ -22,5 +25,37 @@
 			<bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
 		</jaxrs:providers>
 	</jaxrs:server>
+	
+	
+	<!-- Swagger API listing resource -->
+    <bean id="swaggerResourceJSON" 
+        class="com.wordnik.swagger.jaxrs.listing.ApiListingResourceJSON" />
+
+    <!-- Swagger writers -->
+    <bean id="resourceWriter"
+        class="com.wordnik.swagger.jaxrs.listing.ResourceListingProvider" />
+    <bean id="apiWriter"
+        class="com.wordnik.swagger.jaxrs.listing.ApiDeclarationProvider" />
+
+    <jaxrs:server address="/sw" id="swagger">
+        <jaxrs:serviceBeans>
+            <ref bean="swaggerResourceJSON" />
+        </jaxrs:serviceBeans>
+        <jaxrs:providers>
+            <ref bean="resourceWriter" />
+            <ref bean="apiWriter" />
+        </jaxrs:providers>
+    </jaxrs:server>
+
+    <bean id="swaggerConfig" class="com.wordnik.swagger.jaxrs.config.BeanConfig">
+        <property name="resourcePackage" value="com.bay.service" />
+        <property name="version" value="2.0" />
+        <property name="basePath" value="http://localhost:8080/house-0.0.1-SNAPSHOT/rest" />
+        <property name="title" value="Swagger UI Integration Sample" />
+        <property name="description"
+            value="Swagger UI Integration Sample for demonstrating its working." />
+        <property name="contact" value="ankur.r.agarwal@gmail.com" />
+        <property name="scan" value="true" />
+    </bean>
 
 </beans>
