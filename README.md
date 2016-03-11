@@ -14,7 +14,7 @@ Location object in Zipcode has list of coordiantes. Make sure we  insert longitu
 
 Need mysql set up too
 
-Run this sql scripts once we create the zipcodes table
+Run this sql scripts once we create the zipcodes table - zip.sql
 
 DELIMITER //
 CREATE FUNCTION calculate_distance(measurement varchar(2), base_lat double precision, base_lon double precision, lat double precision, lon double precision) RETURNS double precision
@@ -61,4 +61,10 @@ mysql> call zip_proximity('94043', 3, 'mi');
 Query OK, 0 rows affected (0.75 sec)
 
 
+
+Logic is client will have to pass lat, lon,zipcode and radius. Server is ignoring lat, long at the moment.
+Based on the zip code, we will be finding nearest zipcodes on radius from mysql.
+Then for those zip codes, we dip mongo database to pass zipcode documents.
+
+Note - Mysql procedure will also retuen the distance between zipcodes, but we are not passing it to the client at the moment. 
 
