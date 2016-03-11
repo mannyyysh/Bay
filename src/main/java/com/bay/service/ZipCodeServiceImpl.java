@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.bay.adapter.ZipCodeAdapter;
 import com.bay.bo.ZipCodeBO;
+import com.bay.db.template.ZipJDBCTemplate;
 import com.bay.service.response.ZipCodeResponses;
 
 @Service("zipCodeService")
@@ -21,12 +22,12 @@ public class ZipCodeServiceImpl implements ZipCodeService {
     @Autowired
     private ZipCodeAdapter zipCodeAdapter;
     
-    
-	public Response getAllZipCodes(Double lat, Double lon, Double radius) {
+
+	public Response getAllZipCodes(Double lat, Double lon, Double radius, String zipcode) {
 		ZipCodeResponses zipCodeResponses = null;
 		log.info("received getAllZipCodes request");
 		try {
-			zipCodeResponses = zipCodeBO.getAllZipCodes(lat, lon, radius);
+			zipCodeResponses = zipCodeBO.getAllZipCodes(lat, lon, radius, zipcode);
 		} catch (Exception e) {
 			log.error("received exception", e);
 		}

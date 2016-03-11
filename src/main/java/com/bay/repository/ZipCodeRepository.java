@@ -15,7 +15,11 @@ import org.springframework.data.geo.GeoResults;
 import org.springframework.data.geo.Metrics;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.NearQuery;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Query.*;
 import org.springframework.stereotype.Repository;
 
 import com.bay.domain.Zipcode;
@@ -97,5 +101,18 @@ private static final Logger log = LoggerFactory.getLogger(ZipCodeRepository.clas
 	  DBObject addressLocContent = BasicDBObjectBuilder.start().add("$near", nearContent).get();
 	  return addressLocContent;
 	 }
+	 
+	 public List<Zipcode> findZipcodes(List<String> zipCodes) {
+			List<Zipcode> zipList = null;
+			Query query = new Query();
+			query.addCriteria(Criteria.where("zipcode").in(zipCodes));
+			zipList = mongoTemplate.find(query, Zipcode.class);
+
+			   
+	        return zipList;
+			   
+		}
+	 
+	 
 
 }

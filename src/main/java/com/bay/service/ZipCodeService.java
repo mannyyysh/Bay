@@ -25,5 +25,6 @@ public interface ZipCodeService {
 	public Response getAllZipCodes(
 			@ApiParam( value = "Latitude", required = true ) @QueryParam("lat") Double lat, 
 			@ApiParam( value = "Longitude", required = true ) @QueryParam("lon") Double lon, 
-			@ApiParam( value = "Radius", required = true ) @QueryParam("radius") Double radius);
+			@ApiParam( value = "Radius", required = true ) @QueryParam("radius") Double radius,
+			@ApiParam( value = "Zipcode", required = true ) @QueryParam("zipcode") String zipcode);
 }
